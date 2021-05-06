@@ -1,33 +1,29 @@
-console.log('Hello!');
+require('dotenv').config()
 
-require('dotenv').config();
+const path = require('path')
 
-const path = require('path');
+const express = require('express')
 
-const express = require('express');
+const server = express()
 
-const server = express();
+const PORT = process.env.PORT || 5000
 
-// this line works from the start
-const PORT = process.env.PORT || 5000;
+process.env.API_KEY || 'gaga'
 
-// using 'dotenv' we can process local environment variables on our local machine only (because of gitignore)
-// process.env.API_KEY
+server.use(express.static(path.join(__dirname, 'client/build')))
 
-server.use(express.static(path.join(__dirname, 'client/build')));
-
-server.use(express.json());
+server.use(express.json())
 
 server.get('/api/*', (req, res) => {
-    res.json({
-        cohort: 'web 41'
-    });
-});
+  res.json({
+    cohort: 'Web 41',
+  })
+})
 
-server.use('*', (_, res) => {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
+server.use('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
+})
 
 server.listen(PORT, () => {
-    console.log(`listening on ${PORT}`);
-});
+  console.log(`listening on ${PORT}`)
+})
