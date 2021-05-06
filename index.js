@@ -1,8 +1,10 @@
 console.log('Hello!');
+require('dotenv').config();
 const express = require('express');
 
 const server = express();
 
+// this line works from the start
 const PORT = process.env.PORT || 5000;
 
 server.use(express.json());
